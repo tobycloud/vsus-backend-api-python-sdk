@@ -1,6 +1,6 @@
-import json
-
 from aiohttp import ClientSession
+
+global api_instance
 
 
 class API:
@@ -11,14 +11,15 @@ class API:
         self.url = url
         self.session = session
 
-    async def new_instance(self, user_id: str) -> str:
-        """
-        Create a new instance.
-        """
+        global api_instance
+        api_instance = self
 
-        async with self.session.get(
-            f"{self.url}/new/instance",
-            params={"user_id": user_id},
-            timeout=60,
-        ) as response:
-            return json.loads(await response.content.read())["instance"]["ID"]
+    async def close(self) -> None:
+        await self.session.close()
+
+
+api_instance: API | None = None
+
+
+def get_api() -> API | None:
+    return api_instance
