@@ -1,5 +1,4 @@
 from backend_api.api import get_api
-from backend_api.user import User
 from backend_api.workspace import Workspace
 
 
@@ -37,7 +36,7 @@ class Instance:
         )
 
     @staticmethod
-    async def new(user: User, workspace: Workspace) -> "Instance" | None:
+    async def new(workspace: Workspace) -> "Instance":
         """
         Create a new instance.
         """
@@ -49,7 +48,7 @@ class Instance:
 
         async with api.session.get(
             f"{api.url}/new/{workspace.id}/instance",
-            params={"owner": user.id},
+            params={"owner": workspace.owner},
             timeout=60,
         ) as response:
             result = await response.json()
@@ -58,7 +57,8 @@ class Instance:
                 id=result["id"], owner=result["owner"], workspace=result["workspace"]
             )
 
-    async def delete(self) -> None:
+    @staticmethod
+    async def delete(workspace: Workspace, id: str) -> None:
         """
         Delete an instance.
         """
@@ -68,8 +68,7 @@ class Instance:
         if not api:
             raise RuntimeError("API is not initialized")
 
-        async with api.session.delete(
-            f"{api.url}/workspace/{self.id}",
+        await api.session.delete(
+            f"{api.url}/workspace/{workspace.id}/instance/{id}",
             timeout=60,
-        ) as response:
-            await response.json()
+        )

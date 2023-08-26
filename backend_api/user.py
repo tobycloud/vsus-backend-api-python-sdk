@@ -14,7 +14,7 @@ class User:
         return self.id
 
     @staticmethod
-    async def fetch(id: str) -> "User" | None:
+    async def get(id: str) -> "User":
         """
         Fetch a user from the API.
         """
@@ -23,10 +23,6 @@ class User:
         if not api:
             raise RuntimeError("API is not initialized")
 
-        async with api.session.get(
-            f"{api.url}/api/collections/users/records/{id}",
-            timeout=60,
-        ) as response:
-            if response.status != 200:
-                return None
-            return User(id)
+        user = api.pocketbase.collection("users").get_one(id)
+
+        return User(id=user.id)

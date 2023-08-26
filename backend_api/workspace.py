@@ -1,5 +1,3 @@
-import typing
-
 from pocketbase.models.utils import BaseModel
 
 from backend_api.api import get_api
