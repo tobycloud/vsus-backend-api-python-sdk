@@ -29,9 +29,6 @@ class Instance:
 
         api = get_api()
 
-        if not api:
-            raise RuntimeError("API is not initialized")
-
         instance = api.pocketbase.collection("instances").get_one(id)
 
         return Instance(
@@ -45,9 +42,6 @@ class Instance:
         """
 
         api = get_api()
-
-        if not api:
-            raise RuntimeError("API is not initialized")
 
         async with api.session.get(
             f"{api.url}/new/{workspace.id}/instance",
@@ -67,9 +61,6 @@ class Instance:
         """
 
         api = get_api()
-
-        if not api:
-            raise RuntimeError("API is not initialized")
 
         await api.session.delete(
             f"{api.url}/workspace/{workspace.id}/instance/{id}",

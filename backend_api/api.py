@@ -33,5 +33,7 @@ class API:
 api_instance: API | None = None
 
 
-def get_api() -> API | None:
+def get_api() -> API:
+    if not api_instance:
+        raise RuntimeError("API is not initialized")
     return api_instance

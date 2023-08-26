@@ -23,9 +23,6 @@ class User:
         """
         api = get_api()
 
-        if not api:
-            raise RuntimeError("API is not initialized")
-
         user = api.pocketbase.collection("users").get_one(id)
 
         return User(id=user.id)

@@ -1,12 +1,5 @@
-from pocketbase.models.utils import BaseModel
-
 from backend_api.api import get_api
 from backend_api.user import User
-
-
-class WorkspaceModel(BaseModel):
-    owner: str
-    instances: list[str]
 
 
 class Workspace:
@@ -40,9 +33,6 @@ class Workspace:
 
         api = get_api()
 
-        if not api:
-            raise RuntimeError("API is not initialized")
-
         workspace = api.pocketbase.collection("workspaces").create({"owner": user.id})
 
         return Workspace(
@@ -57,9 +47,6 @@ class Workspace:
 
         api = get_api()
 
-        if not api:
-            raise RuntimeError("API is not initialized")
-
         workspace = api.pocketbase.collection("workspaces").get_one(id)
 
         return Workspace(
@@ -73,8 +60,5 @@ class Workspace:
         """
 
         api = get_api()
-
-        if not api:
-            raise RuntimeError("API is not initialized")
 
         api.pocketbase.collection("workspaces").delete(id)
