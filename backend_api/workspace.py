@@ -1,5 +1,14 @@
+import typing
+
+from pocketbase.models.utils import BaseModel
+
 from backend_api.api import get_api
 from backend_api.user import User
+
+
+class WorkspaceModel(BaseModel):
+    owner: str
+    instances: list[str]
 
 
 class Workspace:
@@ -23,7 +32,7 @@ class Workspace:
         return self.id
 
     @staticmethod
-    async def new(user: User) -> "Workspace" | None:
+    async def new(user: User) -> "Workspace":
         """
         Create a new workspace.
         """
@@ -33,13 +42,38 @@ class Workspace:
         if not api:
             raise RuntimeError("API is not initialized")
 
-        async with api.session.get(
-            f"{api.url}/new/workspace",
-            params={"owner": user.id},
-            timeout=60,
-        ) as response:
-            result = await response.json()
+        workspace = api.pocketbase.collection("workspaces").create({"owner": user.id})
 
-            return Workspace(
-                id=result["id"], owner=result["owner"], instances=result["instances"]
-            )
+        return Workspace(
+            id=workspace.id, owner=workspace.owner, instances=workspace.instances  # type: ignore
+        )
+
+    @staticmethod
+    async def get(id: str) -> "Workspace":
+        """
+        Fetch a workspace.
+        """
+
+        api = get_api()
+
+        if not api:
+            raise RuntimeError("API is not initialized")
+
+        workspace = api.pocketbase.collection("workspaces").get_one(id)
+
+        return Workspace(
+            id=workspace.id, owner=workspace.owner, instances=workspace.instances  # type: ignore
+        )
+
+    @staticmethod
+    async def delete(id: str) -> None:
+        """
+        Delete a workspace.
+        """
+
+        api = get_api()
+
+        if not api:
+            raise RuntimeError("API is not initialized")
+
+        api.pocketbase.collection("workspaces").delete(id)
