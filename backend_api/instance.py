@@ -15,8 +15,11 @@ class Instance:
     def __repr__(self) -> str:
         return f"Instance(id={self.id}, owner={self.owner}, workspace={self.workspace})"
 
+    def toJson(self) -> dict:
+        return {"id": self.id, "owner": self.owner, "workspace": self.workspace}
+
     def __str__(self) -> str:
-        return self.id
+        return str(self.toJson())
 
     @staticmethod
     async def get(id: str) -> "Instance":

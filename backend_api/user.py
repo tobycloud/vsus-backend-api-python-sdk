@@ -10,8 +10,11 @@ class User:
     def __repr__(self) -> str:
         return f"User(id={self.id})"
 
+    def toJson(self) -> dict:
+        return {"id": self.id}
+
     def __str__(self) -> str:
-        return self.id
+        return str(self.toJson())
 
     @staticmethod
     async def get(id: str) -> "User":

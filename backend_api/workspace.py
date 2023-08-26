@@ -26,8 +26,11 @@ class Workspace:
             f"Workspace(id={self.id}, owner={self.owner}, instances={self.instances})"
         )
 
+    def toJson(self) -> dict:
+        return {"id": self.id, "owner": self.owner, "instances": self.instances}
+
     def __str__(self) -> str:
-        return self.id
+        return str(self.toJson())
 
     @staticmethod
     async def new(user: User) -> "Workspace":
