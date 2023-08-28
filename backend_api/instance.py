@@ -55,6 +55,20 @@ class Instance:
             )
 
     @staticmethod
+    async def put(id: str, key: str) -> None:
+        """
+        Put an instance.
+        """
+
+        api = get_api()
+
+        await api.session.put(
+            f"{api.url}/instance/{id}/set-ssh-key",
+            data={"key": key},
+            timeout=60,
+        )
+
+    @staticmethod
     async def delete(workspace: Workspace, id: str) -> None:
         """
         Delete an instance.
