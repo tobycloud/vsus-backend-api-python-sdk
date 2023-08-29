@@ -13,14 +13,10 @@ class API:
         self,
         url: str,
         session: ClientSession = ClientSession(),
-        pocketbase: PocketBase | None = None,
+        pocketbase: PocketBase = PocketBase(),
     ) -> None:
         self.url = url
         self.session = session
-
-        if not pocketbase:
-            raise RuntimeError("PocketBase is not initialized")
-
         self.pocketbase = pocketbase
 
         global api_instance
