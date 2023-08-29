@@ -55,7 +55,7 @@ class Instance:
             )
 
     @staticmethod
-    async def put(id: str, key: str) -> None:
+    async def inject_ssh_key(id: str, key: str) -> None:
         """
         Put an instance.
         """

@@ -1,0 +1,13 @@
+from aiohttp import ClientSession
+from pocketbase import PocketBase
+
+class API:
+    url: str
+    session: ClientSession
+    pocketbase: PocketBase
+    def __init__(
+        self, url: str, session: ClientSession = ..., pocketbase: PocketBase = ...
+    ) -> None: ...
+    async def close(self) -> None: ...
+
+def get_api() -> API: ...
