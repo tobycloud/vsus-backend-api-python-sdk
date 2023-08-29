@@ -5,7 +5,7 @@ with open("requirements.txt", "r", encoding="utf8") as file:
 
 setup(
     name="backend_api",
-    version="0.1.4",
+    version="0.1.5",
     packages=find_packages(),
     install_requires=install_requires,
 )
