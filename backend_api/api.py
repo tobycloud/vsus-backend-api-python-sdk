@@ -9,7 +9,7 @@ class API:
     session: ClientSession
     pocketbase: PocketBase
 
-    def __init__(
+    async def init(
         self,
         url: str,
         session: ClientSession = ClientSession(),
