@@ -5,7 +5,7 @@ with open("requirements.txt", "r", encoding="utf8") as reqs:
 
 setup(
     name="backend_api",
-    version="0.1.9",
+    version="0.1.10",
     packages=find_packages(),
     package_data={
         "backend_api": ["*.pyi"],
