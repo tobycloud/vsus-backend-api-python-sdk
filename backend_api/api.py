@@ -9,6 +9,9 @@ class API:
     session: ClientSession
     pocketbase: PocketBase
 
+    def __init__(self) -> None:
+        ...
+
     async def init(
         self,
         url: str,
